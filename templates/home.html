@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>MumbaiCapTures</title>
+    <style>
+        .bg{
+            background: #0d4da1!important;
+        }
+
+
+        #lab_social_icon_footer {
+          padding: 40px 0;
+          background-color: #dedede;
+        }
+        
+        #lab_social_icon_footer a {
+          color: #333;
+        }
+        
+        #lab_social_icon_footer .social:hover {
+          -webkit-transform: scale(1.1);
+          -moz-transform: scale(1.1);
+          -o-transform: scale(1.1);
+        }
+        
+        #lab_social_icon_footer .social {
+          -webkit-transform: scale(0.8);
+          /* Browser Variations: */
+          
+          -moz-transform: scale(0.8);
+          -o-transform: scale(0.8);
+          -webkit-transition-duration: 0.5s;
+          -moz-transition-duration: 0.5s;
+          -o-transition-duration: 0.5s;
+        }
+        /*
+            Multicoloured Hover Variations
+        */
+        
+        #lab_social_icon_footer #social-fb:hover {
+          color: #3B5998;
+        }
+        
+        #lab_social_icon_footer #social-tw:hover {
+          color: #4099FF;
+        }
+
+        #lab_social_icon_footer #social-ins:hover {
+          color: #ffdc40;
+        }
+        
+        #lab_social_icon_footer #social-gp:hover {
+          color: #d34836;
+        }
+
+        #lab_social_icon_footer #social-you:hover {
+          color: #f02308;
+        }
+        
+        #lab_social_icon_footer #social-em:hover {
+          color: #f39c12;
+        }
+
+
+
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg navbar-dark">
+      <!-- <img src="IMG_20190317_180449.jpg"> -->
+        <a class="navbar-brand" href="#">MumbaiCapTures</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/home/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Categories
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {%for cat in categories%}
+                <a class="dropdown-item" href="/Category/{{cat.pk}}">{{cat}}</a>
+                {%endfor%}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/home/">All Images</a>
+              </div>
+            </li>
+            
+          </ul>
+          <form method="GET" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" name="query" type="text" placeholder="Search..." >
+            <input class="btn btn-outline-light my-2 my-sm-0" type="submit">
+            <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button> -->
+          </form>
+        </div>
+      </nav>
+    
+    <!-- main code -->
+<div class="container-fluid">
+    <div class="row mt-3" >
+        <div class="col-md-2">
+            <div class="list-group">
+                <a href="/home/" class="list-group-item list-group-item-action active">
+                  All Images
+                </a>
+                {%for i in categories%}
+                <a href="/Category/{{i.pk}}" class="list-group-item list-group-item-action">{{i.Name}}</a>
+                {%endfor%}
+              </div>
+            <!-- categories -->
+        </div>
+        <div class="col-md-10" >
+            <!-- images -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-columns">
+                      {%if images %}
+                        {%for i in images%}
+                        <div class="card" >
+                            <img class="card-img-top" src="/media/{{i.Image}}" onclick="showModalwithImage('/media/{{i.Image}}')" alt="Card image cap">
+                            <div class="card-body">
+                              <h5 class="card-title">{{i.Title}}</h5>
+                              <p class="card-text">{{i.Description}}</p>
+                              <a href="#" class="btn btn-primary" onclick="showModalwithImage('/media/{{i.Image}}')">View</a>
+                              <a href="{{i.Location}}" class="btn btn-primary">Location</a>
+                              <a href="/media/{{i.Image}}" class="btn btn-primary" download>Download</a>
+                            </div>
+                          </div>
+                        {%endfor%}
+                        {%else%}
+                        <div class="conatiner" style="text-align: center;">
+                          <div class="card m-auto">
+                            <div class="card-body at mt-2 mb-2">
+                              <h3 class="card-title">No Result</h3>
+                              <p class="card-text">There are no results matching your search.</p>
+                            </div>
+                          </div>
+                        </div>
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <!-- Button trigger modal -->
+
+  </div>
+<!-- Modal -->
+<div class="modal fade" id="image-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">MumbaiCapTures</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <img src="#!" id="image-show" class="img-fluid" alt="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="#!" id="download-image" class="btn btn-primary" download>Download</a>
+        <!-- <button type="button" class="btn btn-primary" download>Download</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+  <div class="col-md-12">
+    <section id="lab_social_icon_footer">
+      <!-- Include Font Awesome Stylesheet in Header -->
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+      <div class="container">
+              <div class="text-center center-block">
+                      <a href="https://www.facebook.com/profile.php?id=100012360222117"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
+                    <a href="https://www.instagram.com/nikhil1125/"><i id="social-ins" class="fa fa-instagram fa-3x social"></i></a>
+                    <a href="https://www.youtube.com/channel/UCwd_fai7JsuUBYpXlmSDXaQ/feed" ><i id="social-you" class="fa fa-youtube-play fa-3x social"></i></a>
+                    <a href="https://www.linkedin.com/in/nikhil-soni-736561183/" ><i id="social-tw" class="fa fa-linkedin-square fa-3x social"></i></a>
+                    <a href="mailto:soninikhil665@gmail.com?subject=Suggest some pictures&body=Send pictures of Mumbai with place name and description"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a><br>
+                    <p><h6 style="color:#0d47a1;text-align:center" ><i>This is a practice Django project build by Nikhil Soni</i></h6>Send photos via gmail</p>
+          </div>
+      </div>
+    </section>
+  </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+      function showModalwithImage(imageurl)
+      {
+        $('#image-modal').modal('show')
+        $("#image-show").attr('src',`${imageurl}`)
+        $("#download-image").attr('href',`${imageurl}`)
+      }
+
+    </script>
+  </body>
+</html>
